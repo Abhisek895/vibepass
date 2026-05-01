@@ -3,7 +3,8 @@ const isGithubActions = process.env.GITHUB_ACTIONS === 'true';
 
 const nextConfig = {
   // Only use export mode when building on GitHub Actions
-  output: isGithubActions ? 'export' : undefined,
+  // Removed output: 'export' to support dynamic routes like /profile/[username]
+  // output: isGithubActions ? 'export' : undefined,
   
   images: {
     unoptimized: true,

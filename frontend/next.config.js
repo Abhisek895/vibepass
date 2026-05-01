@@ -38,8 +38,6 @@ const nextConfig = {
   
   // Rewrites only work in local development/standard hosting, not on GitHub Pages
   async rewrites() {
-    if (isGithubActions) return [];
-    
     return [
       {
         source: '/api/:path*',

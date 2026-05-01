@@ -52,7 +52,6 @@ export default function AuthFlow({ initialView }: AuthFlowProps = {}) {
   const [nickname, setNickname] = useState('');
   const [ageConfirmed, setAgeConfirmed] = useState(false);
   const [otp, setOtp] = useState('');
-  const [otpPreview, setOtpPreview] = useState('');
   const [otpDeliveryMode, setOtpDeliveryMode] = useState<OtpDeliveryMode | null>(
     null,
   );
@@ -80,7 +79,6 @@ export default function AuthFlow({ initialView }: AuthFlowProps = {}) {
   const clearTransientState = () => {
     setErrorMsg('');
     setSuccessMsg('');
-    setOtpPreview('');
     setOtpDeliveryMode(null);
   };
 
@@ -127,7 +125,6 @@ export default function AuthFlow({ initialView }: AuthFlowProps = {}) {
       };
       const data = await requestOtp(payload);
       setOtpContext(context);
-      setOtpPreview(data.otpPreview || '');
       setOtpDeliveryMode(data.deliveryMode || null);
       setView('verify-otp');
       setSuccessMsg(data.message || 'OTP sent successfully!');
@@ -350,10 +347,7 @@ export default function AuthFlow({ initialView }: AuthFlowProps = {}) {
               {view === 'register' && 'Join anonymously. Reveal by choice.'}
               {view === 'reset-password' && 'Secure your account with a fresh password.'}
               {view === 'reset-username' && 'Confirm or choose a new anonymous identity.'}
-              {view === 'verify-otp' &&
-                (otpDeliveryMode === 'smtp'
-                  ? `We sent a 6-digit code to ${email}`
-                  : 'Use the OTP below or the one shown in the backend logs.')}
+              {view === 'verify-otp' && `We sent a 6-digit code to ${email}`}
             </p>
           </div>
 
@@ -480,20 +474,6 @@ export default function AuthFlow({ initialView }: AuthFlowProps = {}) {
 
             {view === 'verify-otp' && (
               <div className="space-y-3">
-                {otpPreview && (
-                  <div className="rounded-xl border border-[rgba(var(--accent-primary),0.35)] bg-[rgba(var(--accent-primary),0.08)] px-4 py-3 text-center">
-                    <p className="text-xs uppercase tracking-[0.2em] text-[rgb(var(--text-muted))]">
-                      Development OTP
-                    </p>
-                    <p className="mt-2 font-mono text-2xl tracking-[0.35em] text-[rgb(var(--text-primary))]">
-                      {otpPreview}
-                    </p>
-                    <p className="mt-2 text-xs text-[rgb(var(--text-muted))]">
-                      Email delivery is in local fallback mode, so you can use
-                      this code directly.
-                    </p>
-                  </div>
-                )}
 
                 <label className="mb-4 block w-full text-center text-sm font-medium text-[rgb(var(--text-secondary))]">
                   Enter 6-digit Code

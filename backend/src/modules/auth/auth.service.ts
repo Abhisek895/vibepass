@@ -232,7 +232,6 @@ export class AuthService {
       success: true,
       message: delivery.message,
       deliveryMode: delivery.mode,
-      otpPreview: delivery.previewOtp,
     };
   }
 

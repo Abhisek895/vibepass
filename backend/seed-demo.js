@@ -1083,7 +1083,7 @@ async function seedLookups() {
     {
       id: 'mood-bored',
       name: 'bored',
-      emoji: '??',
+      emoji: '😴',
       description: 'Feeling bored',
       color: 'from-gray-500 to-slate-600',
       category: 'social',
@@ -1091,7 +1091,7 @@ async function seedLookups() {
     {
       id: 'mood-lonely',
       name: 'lonely',
-      emoji: '??',
+      emoji: '🫂',
       description: 'Feeling lonely',
       color: 'from-blue-400 to-indigo-600',
       category: 'social',
@@ -1099,7 +1099,7 @@ async function seedLookups() {
     {
       id: 'mood-curious',
       name: 'curious',
-      emoji: '??',
+      emoji: '🤔',
       description: 'Curious about people',
       color: 'from-purple-400 to-pink-600',
       category: 'social',
@@ -1107,7 +1107,7 @@ async function seedLookups() {
     {
       id: 'mood-want-friends',
       name: 'want-friends',
-      emoji: '??',
+      emoji: '👋',
       description: 'Want to make friends',
       color: 'from-green-400 to-emerald-600',
       category: 'social',
@@ -1115,7 +1115,7 @@ async function seedLookups() {
     {
       id: 'mood-deep-talk',
       name: 'deep-talk',
-      emoji: '??',
+      emoji: '🌌',
       description: 'Deep conversations',
       color: 'from-indigo-400 to-purple-600',
       category: 'social',
@@ -1123,7 +1123,7 @@ async function seedLookups() {
     {
       id: 'mood-soft-energy',
       name: 'soft-energy',
-      emoji: '??',
+      emoji: '☁️',
       description: 'Soft, calm energy',
       color: 'from-teal-400 to-cyan-600',
       category: 'social',
@@ -1131,7 +1131,7 @@ async function seedLookups() {
     {
       id: 'mood-fun-chat',
       name: 'fun-chat',
-      emoji: '??',
+      emoji: '✨',
       description: 'Fun and light chat',
       color: 'from-yellow-400 to-orange-500',
       category: 'social',
@@ -1139,7 +1139,7 @@ async function seedLookups() {
     {
       id: 'mood-flirting',
       name: 'flirting',
-      emoji: '??',
+      emoji: '🔥',
       description: 'Flirty vibes',
       color: 'from-pink-400 to-rose-600',
       category: 'social',
@@ -1147,7 +1147,7 @@ async function seedLookups() {
     {
       id: 'mood-music-talk',
       name: 'music-talk',
-      emoji: '??',
+      emoji: '🎧',
       description: 'Talk about music',
       color: 'from-violet-400 to-fuchsia-600',
       category: 'social',
@@ -1155,7 +1155,7 @@ async function seedLookups() {
     {
       id: 'mood-need-advice',
       name: 'need-advice',
-      emoji: '??',
+      emoji: '💡',
       description: 'Need advice',
       color: 'from-amber-400 to-yellow-600',
       category: 'support',
@@ -1163,7 +1163,7 @@ async function seedLookups() {
     {
       id: 'mood-overthinking',
       name: 'overthinking',
-      emoji: '??',
+      emoji: '🌀',
       description: 'Overthinking things',
       color: 'from-red-400 to-pink-600',
       category: 'support',
@@ -1171,7 +1171,7 @@ async function seedLookups() {
     {
       id: 'mood-study-buddy',
       name: 'study-buddy',
-      emoji: '??',
+      emoji: '📚',
       description: 'Study buddy',
       color: 'from-sky-400 to-blue-600',
       category: 'support',
@@ -1179,7 +1179,7 @@ async function seedLookups() {
     {
       id: 'mood-casual-vibes',
       name: 'casual-vibes',
-      emoji: '??',
+      emoji: '🥂',
       description: 'Casual vibes',
       color: 'from-orange-400 to-red-500',
       category: 'dating',
@@ -1187,7 +1187,7 @@ async function seedLookups() {
     {
       id: 'mood-adventurous-night',
       name: 'adventurous-night',
-      emoji: '??',
+      emoji: '🌃',
       description: 'Adventurous night',
       color: 'from-purple-500 to-indigo-600',
       category: 'dating',
@@ -1195,7 +1195,7 @@ async function seedLookups() {
     {
       id: 'mood-flirty-energy',
       name: 'flirty-energy',
-      emoji: '??',
+      emoji: '💖',
       description: 'Flirty energy',
       color: 'from-rose-400 to-pink-600',
       category: 'dating',
@@ -1203,7 +1203,7 @@ async function seedLookups() {
     {
       id: 'mood-short-term-fun',
       name: 'short-term-fun',
-      emoji: '?',
+      emoji: '🕒',
       description: 'Short-term fun',
       color: 'from-lime-400 to-green-600',
       category: 'dating',
@@ -1211,14 +1211,14 @@ async function seedLookups() {
   ];
 
   const intents = [
-    ['intent-deep-talk', 'deep-talk', 'Deep conversations', '??', false],
-    ['intent-fun-chat', 'fun-chat', 'Fun and light chat', '??', false],
-    ['intent-friendship', 'friendship', 'Make friends', '??', false],
-    ['intent-flirting', 'flirting', 'Flirty vibes', '??', false],
-    ['intent-casual-dating', 'casual-dating', 'Casual dating', '??', true],
-    ['intent-hookups', 'hookups', 'Hookups', '??', true],
-    ['intent-fwb', 'fwb', 'Friends with benefits', '??', true],
-    ['intent-short-term', 'short-term', 'Short-term relationships', '?', true],
+    ['intent-deep-talk', 'deep-talk', 'Deep conversations', '🌌', false],
+    ['intent-fun-chat', 'fun-chat', 'Fun and light chat', '✨', false],
+    ['intent-friendship', 'friendship', 'Make friends', '👋', false],
+    ['intent-flirting', 'flirting', 'Flirty vibes', '🔥', false],
+    ['intent-casual-dating', 'casual-dating', 'Casual dating', '🥂', true],
+    ['intent-hookups', 'hookups', 'Hookups', '⛓️', true],
+    ['intent-fwb', 'fwb', 'Friends with benefits', '🤝', true],
+    ['intent-short-term', 'short-term', 'Short-term relationships', '🕒', true],
   ];
 
   const prompts = [

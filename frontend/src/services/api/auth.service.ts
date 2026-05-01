@@ -18,7 +18,6 @@ export interface AuthResponse {
   message?: string;
   deliveryMode?: OtpDeliveryMode;
   isNewUser?: boolean;
-  otpPreview?: string;
   provider?: SocialProvider;
   user?: AuthUser;
 }

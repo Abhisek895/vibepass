@@ -440,6 +440,26 @@ async findByUsername(username: string) {
         where: { userId: id },
       });
 
+      await tx.auditLog.deleteMany({
+        where: {
+          OR: [{ adminId: id }, { targetUserId: id }],
+        },
+      });
+
+      await tx.auditSession.deleteMany({
+        where: {
+          OR: [{ adminId: id }, { userId: id }],
+        },
+      });
+
+      await tx.notification.deleteMany({
+        where: { actorId: id },
+      });
+
+      await tx.aIInsightHistory.deleteMany({
+        where: { userId: id },
+      });
+
       await tx.profile.deleteMany({
         where: { userId: id },
       });

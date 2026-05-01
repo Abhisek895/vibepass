@@ -181,30 +181,14 @@ export class AuthService {
         throw new BadRequestException('An account with this email already exists.');
       }
 
-      const availableUsername = await this.assertUsernameAvailable(
+      // Check if username is taken by another user who is already fully registered
+      await this.assertUsernameAvailable(
         trimmedUsername,
         existingUser?.id,
       );
 
-      otpRecord.username = availableUsername;
+      otpRecord.username = trimmedUsername;
       otpRecord.passwordHash = hashPassword(password);
-
-      if (!existingUser) {
-        await this.prisma.user.create({
-          data: {
-            id: randomUUID(),
-            email: normalizedEmail,
-            username: availableUsername,
-          },
-        });
-      } else if (existingUser.username !== availableUsername) {
-        await this.prisma.user.update({
-          where: { id: existingUser.id },
-          data: {
-            username: availableUsername,
-          },
-        });
-      }
     }
 
     if (context !== 'signup') {

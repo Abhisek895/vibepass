@@ -9,6 +9,7 @@ interface User {
   id: string;
   email: string;
   username: string;
+  nickname?: string;
 }
 
 interface AuthContextType {
@@ -23,6 +24,7 @@ type BackendMe = {
   email: string;
   id: string;
   username?: string | null;
+  nickname?: string | null;
 };
 
 function getStoredUser(): User | null {
@@ -49,6 +51,7 @@ function normalizeUser(userData: BackendMe): User {
     id: userData.id,
     email: userData.email,
     username: userData.username || userData.email.split('@')[0],
+    nickname: userData.nickname || userData.username || userData.email.split('@')[0],
   };
 }
 

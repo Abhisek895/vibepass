@@ -254,7 +254,7 @@ export default function ProfilePage() {
   const handleSave = () => {
     const payload: UpdateUserInput = {};
     const ageValue = editData.age ? Number(editData.age) : undefined;
-    
+
     if (ageValue !== undefined && (!Number.isFinite(ageValue) || ageValue < 18 || ageValue > 100)) {
       showNotification('Age must be between 18 and 100', 'error');
       return;
@@ -371,27 +371,26 @@ export default function ProfilePage() {
   return (
     <div className="h-full flex flex-col bg-slate-950 overflow-hidden relative text-white">
       {/* Hidden File Inputs */}
-      <input 
-        type="file" 
-        ref={profileInputRef} 
-        onChange={(e) => handleFileChange(e, 'profile')} 
-        className="hidden" 
+      <input
+        type="file"
+        ref={profileInputRef}
+        onChange={(e) => handleFileChange(e, 'profile')}
+        className="hidden"
         accept="image/*"
       />
-      <input 
-        type="file" 
-        ref={coverInputRef} 
-        onChange={(e) => handleFileChange(e, 'cover')} 
-        className="hidden" 
+      <input
+        type="file"
+        ref={coverInputRef}
+        onChange={(e) => handleFileChange(e, 'cover')}
+        className="hidden"
         accept="image/*"
       />
 
       {/* Notification */}
       {notification && (
         <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 animate-in fade-in slide-in-from-top-2">
-          <div className={`px-6 py-3 rounded-xl shadow-2xl text-white text-sm font-medium backdrop-blur-sm ${
-            notification.type === 'success' ? 'bg-emerald-600/90 border border-emerald-500/50' : 'bg-red-600/90 border border-red-500/50'
-          }`}>
+          <div className={`px-6 py-3 rounded-xl shadow-2xl text-white text-sm font-medium backdrop-blur-sm ${notification.type === 'success' ? 'bg-emerald-600/90 border border-emerald-500/50' : 'bg-red-600/90 border border-red-500/50'
+            }`}>
             {notification.message}
           </div>
         </div>
@@ -421,7 +420,7 @@ export default function ProfilePage() {
               <div className="w-full h-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600" />
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-            
+
             {isOwnProfile && (
               <div className="absolute top-4 right-4 p-2 bg-black/20 backdrop-blur-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
                 <Camera className="h-5 w-5 text-white" />
@@ -540,21 +539,21 @@ export default function ProfilePage() {
 
               {!isOwnProfile && profile.friendshipStatus === 'FRIEND' && (
                 <div className="flex gap-3">
-                  <button 
+                  <button
                     onClick={() => router.push(`/chat`)}
                     className="bg-[#25D366] hover:bg-[#20bd5b] text-[#0B141B] px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg transition-all hover:scale-105"
                   >
                     <MessageCircle className="h-4 w-4" /> Message
                   </button>
-                  <button 
+                  <button
                     onClick={async () => {
                       if (confirm(`Are you sure you want to unmatch with ${profile.displayName}? This will also archive your chat.`)) {
                         try {
-                           const { unmatch } = await import('@/services/api/matches.service');
-                           await unmatch(profile.id);
-                           router.push('/chat');
+                          const { unmatch } = await import('@/services/api/matches.service');
+                          await unmatch(profile.id);
+                          router.push('/chat');
                         } catch (err) {
-                           alert('Failed to unmatch. Please try again.');
+                          alert('Failed to unmatch. Please try again.');
                         }
                       }
                     }}
@@ -612,8 +611,8 @@ export default function ProfilePage() {
           </div>
         ) : (
           <div className="bg-slate-800/30 rounded-2xl p-8 border border-slate-700/50">
-             <h3 className="text-xl font-bold mb-6">Full Profile Details</h3>
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <h3 className="text-xl font-bold mb-6">Full Profile Details</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {detailItems.map((item, i) => (
                 <div key={i} className="flex items-center gap-4 p-4 bg-slate-900/50 rounded-xl border border-slate-800">
                   <div className="text-slate-500">{item.icon}</div>
@@ -688,7 +687,7 @@ export default function ProfilePage() {
               </div>
 
               <div className="flex items-center gap-6 justify-end mt-8 pt-6 border-t border-slate-800">
-                <button 
+                <button
                   onClick={handleDeleteAccount}
                   className="text-red-500 hover:text-red-400 font-bold text-xs uppercase tracking-widest transition-colors mr-auto"
                 >
@@ -712,14 +711,14 @@ export default function ProfilePage() {
                 <h2 className="text-2xl font-bold">VibePass Menu</h2>
                 <button onClick={() => setSidebarOpen(false)} className="p-2 hover:bg-slate-800 rounded-xl transition-colors"><X className="h-6 w-6 text-slate-400" /></button>
               </div>
-              
+
               <div className="space-y-4">
                 <button onClick={() => { logout(); router.push('/auth'); }} className="w-full flex items-center gap-4 p-4 bg-white/5 text-slate-400 rounded-2xl font-bold hover:bg-white/10 transition-all group">
                   <LogOut className="h-6 w-6 group-hover:translate-x-1 transition-transform" /> Sign Out
                 </button>
 
-                <button 
-                  onClick={handleDeleteAccount} 
+                <button
+                  onClick={handleDeleteAccount}
                   className="w-full flex items-center gap-4 p-4 bg-red-500/10 text-red-400 rounded-2xl font-bold hover:bg-red-500/20 transition-all group border border-red-500/10"
                 >
                   <Trash2 className="h-6 w-6 group-hover:scale-110 transition-transform" /> Delete Account

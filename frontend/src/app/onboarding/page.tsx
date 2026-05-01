@@ -111,7 +111,7 @@ export default function OnboardingPage() {
 
   const nextStep = () => setStep(s => s + 1);
   const prevStep = () => setStep(s => s - 1);
-  const progress = (step / 3) * 100;
+  const progress = (step / 2) * 100;
 
   const containerVariants = {
     hidden: { opacity: 0, x: 20 },
@@ -140,7 +140,7 @@ export default function OnboardingPage() {
       <div className="w-full max-w-2xl mx-auto pt-12 px-6 z-10">
         <div className="flex items-center justify-between mb-4">
           <span className="text-xs font-bold uppercase tracking-widest text-[rgb(var(--accent-primary))]">Identity Discovery</span>
-          <span className="text-xs font-medium text-[rgb(var(--text-muted))]">Step {step} of 3</span>
+          <span className="text-xs font-medium text-[rgb(var(--text-muted))]">Step {step} of 2</span>
         </div>
         <div className="h-1.5 w-full bg-[rgb(var(--bg-surface))] rounded-full overflow-hidden shadow-inner">
           <motion.div
@@ -290,88 +290,11 @@ export default function OnboardingPage() {
                 <div className="flex gap-4 pt-6">
                   <button onClick={prevStep} className="w-1/3 btn-secondary h-14">Back</button>
                   <button
-                    onClick={nextStep}
-                    disabled={formData.interests.length < 3}
-                    className="flex-1 btn-primary h-14 text-lg font-bold disabled:opacity-30"
-                  >
-                    {formData.interests.length < 3 ? `Pick ${3 - formData.interests.length} more` : 'Next'}
-                  </button>
-                </div>
-              </motion.div>
-            )}
-
-            {step === 3 && (
-              <motion.div
-                key="step3"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="space-y-8"
-              >
-                <div className="text-center space-y-2">
-                  <h1 className="text-4xl font-bold tracking-tight">Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[rgb(var(--accent-tertiary))] to-[rgb(var(--accent-primary))]">Vibe</span></h1>
-                  <p className="text-[rgb(var(--text-secondary))]">How do you want to connect?</p>
-                </div>
-
-                <div className="space-y-6 max-h-[450px] overflow-y-auto pr-3 no-scrollbar border border-white/5 bg-white/5 p-4 rounded-2xl">
-                  <div className="space-y-3">
-                    <label className="text-sm font-bold uppercase tracking-widest text-[rgb(var(--text-muted))]">Intent</label>
-                    <div className="space-y-3">
-                      {conversationIntents.map((intent) => {
-                        const isSelected = formData.conversationIntent === intent.value;
-                        return (
-                          <button
-                            key={intent.value}
-                            onClick={() => {
-                              if (intent.isCasual) setShowCasualWarning(true);
-                              setFormData({ ...formData, conversationIntent: intent.value });
-                            }}
-                            className={`w-full p-5 rounded-2xl border transition-all duration-300 flex items-center gap-4 ${isSelected
-                              ? 'bg-[rgb(var(--accent-secondary),0.1)] border-[rgb(var(--accent-secondary))]'
-                              : 'bg-[rgb(var(--bg-surface),0.4)] border-white/5 hover:border-white/20'
-                              }`}
-                          >
-                            <span className="text-2xl">{intent.emoji || '✨'}</span>
-                            <div className="text-left">
-                              <p className="font-bold">{intent.label}</p>
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <label className="text-sm font-bold uppercase tracking-widest text-[rgb(var(--text-muted))]">Voice Comfort</label>
-                    <div className="grid grid-cols-2 gap-3">
-                      {voiceLevels.map((level) => {
-                        const isSelected = formData.voiceComfort === level.value;
-                        return (
-                          <button
-                            key={level.value}
-                            onClick={() => setFormData({ ...formData, voiceComfort: level.value })}
-                            className={`p-4 rounded-2xl border transition-all duration-300 ${isSelected
-                              ? 'bg-[rgb(var(--voice-active),0.1)] border-[rgb(var(--voice-active))]'
-                              : 'bg-[rgb(var(--bg-surface),0.4)] border-white/5 hover:border-white/20'
-                              }`}
-                          >
-                            <p className="text-sm font-bold">{level.label}</p>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex gap-4 pt-6">
-                  <button onClick={prevStep} className="w-1/3 btn-secondary h-14">Back</button>
-                  <button
                     onClick={handleSubmit}
-                    disabled={isLoading || !formData.conversationIntent || !formData.voiceComfort}
+                    disabled={isLoading || formData.interests.length < 3}
                     className="flex-1 btn-primary h-14 text-lg font-bold disabled:opacity-30 animate-sparkle"
                   >
-                    {isLoading ? 'Joining...' : 'Complete Discovery'}
+                    {isLoading ? 'Joining...' : formData.interests.length < 3 ? `Pick ${3 - formData.interests.length} more` : 'Complete Discovery'}
                   </button>
                 </div>
               </motion.div>
@@ -379,43 +302,6 @@ export default function OnboardingPage() {
           </AnimatePresence>
         </div>
       </div>
-
-      {/* Safety Modal */}
-      <AnimatePresence>
-        {showCasualWarning && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-6"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="bg-[rgb(var(--bg-elevated))] rounded-[32px] p-8 max-w-md w-full border border-white/10 shadow-2xl"
-            >
-              <div className="w-12 h-12 bg-amber-500/20 rounded-2xl flex items-center justify-center mb-6">
-                <span className="text-2xl">🛡️</span>
-              </div>
-              <h2 className="text-2xl font-bold mb-4">Safety First</h2>
-              <p className="text-[rgb(var(--text-secondary))] mb-6 leading-relaxed">
-                When exploring casual connections, your safety is our priority.
-              </p>
-              <ul className="text-sm text-[rgb(var(--text-secondary))] space-y-3 mb-8">
-                <li className="flex gap-3"><span>•</span> Always meet in public first</li>
-                <li className="flex gap-3"><span>•</span> Share identity only when comfortable</li>
-                <li className="flex gap-3"><span>•</span> Trust your instincts</li>
-              </ul>
-              <button
-                onClick={() => setShowCasualWarning(false)}
-                className="w-full btn-primary h-14 font-bold"
-              >
-                I Understand
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </main>
   );
 }

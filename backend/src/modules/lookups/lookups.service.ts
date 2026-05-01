@@ -2,6 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
 import { parseStringArray } from '../../common/utils/serialized-fields.util';
 
+const DEFAULT_INTERESTS = [
+  'Music', 'Travel', 'Photography', 'Gaming', 'Fitness',
+  'Art', 'Food', 'Tech', 'Books', 'Movies',
+  'Nature', 'Coffee', 'Startups', 'Design', 'Wellness',
+  'Fashion', 'Sports', 'Cooking', 'Dancing', 'Coding'
+];
+
 @Injectable()
 export class LookupsService {
   constructor(private readonly prisma: PrismaService) {}
@@ -52,6 +59,7 @@ export class LookupsService {
     ]);
 
     const interests = this.toDistinctValues(
+      ...DEFAULT_INTERESTS,
       ...users.map(user => user.interests),
       ...profiles.map(profile => profile.interests),
     );

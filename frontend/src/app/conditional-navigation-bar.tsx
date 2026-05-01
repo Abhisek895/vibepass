@@ -8,8 +8,13 @@ export function ConditionalNavigationBar() {
   const isChatDetailRoute =
     pathname?.startsWith('/chat/') && pathname.split('/').length > 2;
 
-  // Hide navbar on auth, landing, and full-screen chat detail pages.
-  if (pathname?.startsWith('/auth') || pathname === '/' || isChatDetailRoute) {
+  // Hide navbar on auth, onboarding, landing, and full-screen chat detail pages.
+  if (
+    pathname?.startsWith('/auth') ||
+    pathname?.startsWith('/onboarding') ||
+    pathname === '/' ||
+    isChatDetailRoute
+  ) {
     return null;
   }
 

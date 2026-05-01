@@ -152,7 +152,7 @@ export function NavigationBar() {
               <UserIcon className="h-5 w-5 text-[rgb(var(--text-secondary))]" />
             </button>
             <div className="text-sm hidden md:block">
-              <p className="font-semibold text-white">{user?.username || 'Guest'}</p>
+              <p className="font-semibold text-white">{user?.nickname || user?.username || 'Guest'}</p>
               <p className="text-[rgb(var(--text-secondary))]">@{user?.username || 'guest'}</p>
             </div>
             <button
@@ -175,7 +175,7 @@ export function NavigationBar() {
                 <UserIcon className="h-6 w-6 text-[rgb(var(--text-secondary))]" />
               </div>
               <div>
-                <p className="font-semibold text-white text-base">{user?.username || 'Guest'}</p>
+                <p className="font-semibold text-white text-base">{user?.nickname || user?.username || 'Guest'}</p>
                 <p className="text-[rgb(var(--text-secondary))] text-sm">@{user?.username || 'guest'}</p>
               </div>
             </div>

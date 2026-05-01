@@ -250,13 +250,12 @@ export default function AuthFlow({ initialView }: AuthFlowProps = {}) {
         setErrorMsg('Password must be at least 6 characters');
         return;
       }
+      if (!nickname.trim()) {
+        setErrorMsg('Nickname is required');
+        return;
+      }
 
-      // Generate a temporary nickname to satisfy backend requirement
-      // The user will set their real nickname during onboarding
-      const tempNickname = `vibe_${Math.floor(Math.random() * 1000000)}`;
-      setNickname(tempNickname);
-
-      void handleRequestOtp('signup', tempNickname);
+      void handleRequestOtp('signup', nickname);
       return;
     }
 
@@ -404,6 +403,21 @@ export default function AuthFlow({ initialView }: AuthFlowProps = {}) {
                     placeholder="you@example.com"
                   />
                 </div>
+                {view === 'register' && (
+                  <div className="space-y-1">
+                    <label className="text-sm font-medium text-[rgb(var(--text-secondary))]">
+                      Nickname
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={nickname}
+                      onChange={(e) => setNickname(e.target.value)}
+                      className="w-full rounded-xl border border-transparent bg-[rgb(var(--bg-secondary))] px-4 py-3 text-[rgb(var(--text-primary))] outline-none transition-all placeholder:text-[rgb(var(--text-muted))] focus:ring-1 focus:ring-[rgb(var(--accent-primary))]"
+                      placeholder="e.g. VibeMaster"
+                    />
+                  </div>
+                )}
                 <div className="space-y-1">
                   <label className="text-sm font-medium text-[rgb(var(--text-secondary))]">
                     Password

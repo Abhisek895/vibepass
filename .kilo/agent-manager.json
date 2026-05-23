@@ -6,10 +6,28 @@
       "parentBranch": "main",
       "createdAt": "2026-04-24T11:27:45.008Z",
       "remote": "origin"
+    },
+    "wt-1779509143513-1": {
+      "branch": "quiet-motion",
+      "path": "c:\\VibePass\\.kilo\\worktrees\\quiet-motion",
+      "parentBranch": "main",
+      "createdAt": "2026-05-23T04:05:43.513Z",
+      "remote": "origin"
     }
   },
-  "sessions": {},
+  "sessions": {
+    "ses_1acfd0d28ffe3Vxlkuy7M7UsZ6": {
+      "worktreeId": "wt-1779509143513-1",
+      "createdAt": "2026-05-23T04:06:02.722Z"
+    }
+  },
+  "tabOrder": {
+    "local": [
+      "pending:1"
+    ]
+  },
   "worktreeOrder": [
-    "wt-1777030065008-1"
+    "wt-1777030065008-1",
+    "wt-1779509143513-1"
   ]
 }

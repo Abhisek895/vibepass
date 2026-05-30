@@ -626,81 +626,81 @@ export default function ProfilePage() {
           </div>
         )}
 
-        {/* Edit Modal */}
-        {isEditing && (
-          <div className="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto" onClick={() => setIsEditing(false)}>
-            <div className="bg-slate-900 border border-slate-700 rounded-3xl p-8 w-full max-w-xl shadow-2xl" onClick={e => e.stopPropagation()}>
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-bold text-white">Edit Profile</h2>
-                <button onClick={() => setIsEditing(false)} className="p-2 hover:bg-slate-800 rounded-xl transition-colors"><X className="h-6 w-6 text-slate-400" /></button>
-              </div>
+         {/* Edit Modal */}
+         {isEditing && (
+           <div className="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto" onClick={() => setIsEditing(false)}>
+             <div className="bg-slate-900 border border-slate-700 rounded-3xl p-6 w-full max-w-2xl shadow-2xl" onClick={e => e.stopPropagation()}>
+               <div className="flex items-center justify-between mb-6">
+                 <h2 className="text-2xl font-bold text-white">Edit Profile</h2>
+                 <button onClick={() => setIsEditing(false)} className="p-2 hover:bg-slate-800 rounded-xl transition-colors hover:scale-105"><X className="h-6 w-6 text-slate-400" /></button>
+               </div>
 
-              <div className="space-y-6 max-h-[70vh] overflow-y-auto pr-2 custom-scrollbar">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-400 mb-2">Username</label>
-                    <input type="text" value={editData.username} onChange={e => setEditData(prev => ({ ...prev, username: e.target.value }))} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-400 mb-2">Age</label>
-                    <input type="number" value={editData.age} onChange={e => setEditData(prev => ({ ...prev, age: e.target.value }))} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all" />
-                  </div>
-                </div>
+               <div className="space-y-6 max-h-[80vh] overflow-y-auto pr-2 custom-scrollbar">
+                 <div className="grid gap-4">
+                   <div>
+                     <label className="block text-sm font-semibold text-slate-400 mb-2">Username</label>
+                     <input type="text" value={editData.username} onChange={e => setEditData(prev => ({ ...prev, username: e.target.value }))} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all" />
+                   </div>
+                   <div>
+                     <label className="block text-sm font-semibold text-slate-400 mb-2">Age</label>
+                     <input type="number" value={editData.age} onChange={e => setEditData(prev => ({ ...prev, age: e.target.value }))} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all" />
+                   </div>
+                 </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-slate-400 mb-2">Bio / Intro</label>
-                  <textarea value={editData.bio} onChange={e => setEditData(prev => ({ ...prev, bio: e.target.value }))} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-white h-32 resize-none focus:border-blue-500 outline-none" placeholder="Tell us about yourself..." />
-                </div>
+                 <div>
+                   <label className="block text-sm font-semibold text-slate-400 mb-2">Bio / Intro</label>
+                   <textarea value={editData.bio} onChange={e => setEditData(prev => ({ ...prev, bio: e.target.value }))} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-white h-32 resize-none focus:border-blue-500 outline-none" placeholder="Tell us about yourself..." />
+                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-400 mb-2">Pronouns</label>
-                    <input type="text" value={editData.pronouns} onChange={e => setEditData(prev => ({ ...prev, pronouns: e.target.value }))} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-white focus:border-blue-500 outline-none" placeholder="e.g. they/them" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-400 mb-2">Gender Preference</label>
-                    <select value={editData.genderPreference} onChange={e => setEditData(prev => ({ ...prev, genderPreference: e.target.value }))} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-white focus:border-blue-500 outline-none">
-                      <option value="">Select preference</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Everyone">Everyone</option>
-                    </select>
-                  </div>
-                </div>
+                 <div className="grid gap-4">
+                   <div>
+                     <label className="block text-sm font-semibold text-slate-400 mb-2">Pronouns</label>
+                     <input type="text" value={editData.pronouns} onChange={e => setEditData(prev => ({ ...prev, pronouns: e.target.value }))} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-white focus:border-blue-500 outline-none" placeholder="e.g. they/them" />
+                   </div>
+                   <div>
+                     <label className="block text-sm font-semibold text-slate-400 mb-2">Gender Preference</label>
+                     <select value={editData.genderPreference} onChange={e => setEditData(prev => ({ ...prev, genderPreference: e.target.value }))} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-white focus:border-blue-500 outline-none">
+                       <option value="">Select preference</option>
+                       <option value="Male">Male</option>
+                       <option value="Female">Female</option>
+                       <option value="Everyone">Everyone</option>
+                     </select>
+                   </div>
+                 </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-slate-400 mb-2">Interests</label>
-                  <div className="bg-slate-800 border border-slate-700 rounded-xl p-4 flex flex-wrap gap-2 mb-2">
-                    {editData.interests.map(tag => (
-                      <span key={tag} className="bg-blue-600/20 text-blue-400 border border-blue-600/30 px-3 py-1 rounded-full text-sm flex items-center gap-2">
-                        #{tag}
-                        <button onClick={() => removeInterestTag(tag)} className="hover:text-white"><X className="h-3 w-3" /></button>
-                      </span>
-                    ))}
-                    {!editData.interests.length && <span className="text-slate-500 text-sm">No interests added yet</span>}
-                  </div>
-                  <div className="flex gap-2">
-                    <input type="text" value={interestInput} onChange={e => setInterestInput(e.target.value)} onKeyDown={handleInterestKeyDown} className="flex-1 bg-slate-800 border border-slate-700 rounded-xl p-3 text-white outline-none focus:border-blue-500" placeholder="Add interest..." />
-                    <button onClick={() => addInterestTag(interestInput)} className="bg-slate-700 hover:bg-slate-600 text-white px-4 rounded-xl font-medium transition-colors">Add</button>
-                  </div>
-                </div>
-              </div>
+                 <div>
+                   <label className="block text-sm font-semibold text-slate-400 mb-2">Interests</label>
+                   <div className="bg-slate-800 border border-slate-700 rounded-xl p-4 flex flex-wrap gap-2 mb-4">
+                     {editData.interests.map(tag => (
+                       <span key={tag} className="bg-blue-600/20 text-blue-400 border border-blue-600/30 px-3 py-1 rounded-full text-sm flex items-center gap-2">
+                         #{tag}
+                         <button onClick={() => removeInterestTag(tag)} className="hover:text-white"><X className="h-3 w-3" /></button>
+                       </span>
+                     ))}
+                     {!editData.interests.length && <span className="text-slate-500 text-sm">No interests added yet</span>}
+                   </div>
+                   <div className="flex gap-2 w-full">
+                     <input type="text" value={interestInput} onChange={e => setInterestInput(e.target.value)} onKeyDown={handleInterestKeyDown} className="flex-1 bg-slate-800 border border-slate-700 rounded-xl p-3 text-white outline-none focus:border-blue-500" placeholder="Add interest..." />
+                     <button onClick={() => addInterestTag(interestInput)} className="bg-slate-700 hover:bg-slate-600 text-white px-4 rounded-xl font-medium transition-colors hover:scale-105">Add</button>
+                   </div>
+                 </div>
+               </div>
 
-              <div className="flex items-center gap-6 justify-end mt-8 pt-6 border-t border-slate-800">
-                <button
-                  onClick={handleDeleteAccount}
-                  className="text-red-500 hover:text-red-400 font-bold text-xs uppercase tracking-widest transition-colors mr-auto"
-                >
-                  Delete Account
-                </button>
-                <button onClick={() => setIsEditing(false)} className="px-6 py-3 text-slate-400 font-medium hover:text-white transition-colors">Cancel</button>
-                <button onClick={handleSave} disabled={updateMutation.isPending} className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 px-8 py-3 rounded-xl font-bold text-white shadow-lg shadow-blue-600/20 transition-all active:scale-95">
-                  {updateMutation.isPending ? 'Saving...' : 'Save Changes'}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+               <div className="flex items-center gap-6 justify-end mt-8 pt-6 border-t border-slate-800">
+                 <button
+                   onClick={handleDeleteAccount}
+                   className="text-red-500 hover:text-red-400 font-bold text-xs uppercase tracking-widest transition-colors mr-auto hover:scale-105"
+                 >
+                   Delete Account
+                 </button>
+                 <button onClick={() => setIsEditing(false)} className="px-6 py-3 text-slate-400 font-medium hover:text-white transition-colors hover:scale-105">Cancel</button>
+                 <button onClick={handleSave} disabled={updateMutation.isPending} className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 px-8 py-3 rounded-xl font-bold text-white shadow-lg shadow-blue-600/20 transition-all active:scale-95 hover:scale-105">
+                   {updateMutation.isPending ? 'Saving...' : 'Save Changes'}
+                 </button>
+               </div>
+             </div>
+           </div>
+         )}
 
         {/* Sidebar */}
         {sidebarOpen && (

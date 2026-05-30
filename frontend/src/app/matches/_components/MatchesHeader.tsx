@@ -48,7 +48,7 @@ export function MatchesHeader({
         </div>
 
         <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto_auto] lg:min-w-[34rem]">
-          <label className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-white/78 transition focus-within:border-white/20 focus-within:bg-white/8">
+          <label className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-white/78 transition focus-within:border-white/20 focus-within:bg-white/8 hover:scale-105">
             <SearchIcon />
             <input
               type="search"
@@ -62,13 +62,13 @@ export function MatchesHeader({
           <button
             type="button"
             onClick={onFilterButtonClick}
-            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-sm font-medium text-white/84 transition hover:bg-white/10"
+            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-sm font-medium text-white/84 transition hover:bg-white/10 hover:scale-105 active:scale-95"
           >
             <FilterIcon />
             Filters
           </button>
 
-          <label className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-sm text-white/84">
+          <label className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-sm text-white/84 hover:scale-105">
             <SortIcon />
             <select
               value={sortValue}
@@ -89,7 +89,7 @@ export function MatchesHeader({
         {summaryChips.map(chip => (
           <div
             key={chip.id}
-            className={`min-w-fit rounded-full border px-4 py-2 text-sm transition ${
+            className={`min-w-fit rounded-full border px-4 py-2 text-sm transition hover:scale-105 ${
               activeSummary === chip.id
                 ? 'border-rose-400/30 bg-rose-500/16 text-white'
                 : 'border-white/10 bg-white/6 text-white/74'

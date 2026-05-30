@@ -89,10 +89,10 @@ export function NotificationItem({ notification, onMarkRead, onDelete }: Notific
       tabIndex={0}
       role="button"
       aria-label={`${notification.message} - ${notification.read ? 'read' : 'unread'}`}
-      className={`vibe-card p-4 flex gap-4 cursor-pointer transition-all duration-400 hover:scale-[1.008] hover:shadow-[0_12px_32px_rgba(0,0,0,0.5)] hover:border-[rgba(var(--border-subtle),0.15)] group focus:outline-none focus:ring-2 focus:ring-[rgb(var(--accent-primary))] focus:ring-offset-2 focus:ring-offset-[rgb(var(--bg-primary))] relative overflow-hidden ${!notification.read ? `border-l-4 ${config.accent} bg-gradient-to-r from-[rgba(var(--accent-primary),0.08)] to-transparent` : ''}`}
+      className={`vibe-card p-4 flex gap-4 cursor-pointer transition-all duration-400 hover:scale-[1.01] hover:shadow-[0_16px_36px_rgba(0,0,0,0.6)] hover:border-[rgba(var(--border-subtle),0.2)] group focus:outline-none focus:ring-2 focus-ring-[rgb(var(--accent-primary))] focus:ring-offset-2 focus:ring-offset-[rgb(var(--bg-primary))] relative overflow-hidden ${!notification.read ? `border-l-4 ${config.accent} bg-gradient-to-r from-[rgba(var(--accent-primary),0.1)] to-transparent` : ''}`}
     >
       {/* Hover gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--accent-primary))] to-[rgb(var(--accent-secondary))] opacity-0 group-hover:opacity-[0.03] transition-opacity duration-400 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--accent-primary))] to-[rgb(var(--accent-secondary))] opacity-0 group-hover:opacity-[0.04] transition-opacity duration-400 pointer-events-none" />
 
       <div className="relative flex-shrink-0">
         <Avatar className="h-10 sm:h-12 w-10 sm:w-12 border-2 border-[rgba(var(--border-subtle),0.1)] shadow-[0_4px_12px_rgba(0,0,0,0.3)] transition-transform duration-300 group-hover:scale-105">
@@ -134,7 +134,7 @@ export function NotificationItem({ notification, onMarkRead, onDelete }: Notific
             {onDelete && (
               <button 
                 onClick={(e) => { e.stopPropagation(); onDelete(notification.id); }}
-                className="p-1 sm:p-1.5 rounded-lg sm:rounded-xl hover:bg-[rgb(var(--danger),0.15)] transition-all duration-300 transform hover:scale-110"
+                className="p-1 sm:p-1.5 rounded-lg sm:rounded-xl hover:bg-[rgb(var(--danger),0.15)] transition-all duration-300 transform hover:scale-110 active:scale-95"
               >
                 <Trash2 className="h-3.5 sm:h-4 w-3.5 sm:w-4 text-[rgb(var(--text-muted))] group-hover:text-[rgb(var(--danger))] transition-colors duration-200" />
               </button>

@@ -23,13 +23,13 @@ export function MatchesFilterTabs({
 }: MatchesFilterTabsProps) {
   return (
     <div className="overflow-x-auto">
-      <div className="inline-flex min-w-full gap-2 rounded-[1.75rem] border border-white/8 bg-white/6 p-2 backdrop-blur-xl">
+      <div className="inline-flex min-w-full gap-2 rounded-[2rem] border border-white/8 bg-white/6 p-2 backdrop-blur-xl">
         {tabs.map(tab => (
           <button
             key={tab.id}
             type="button"
             onClick={() => onChange(tab.id)}
-            className={`inline-flex min-w-fit items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium transition duration-200 ${
+            className={`inline-flex min-w-fit items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium transition duration-200 hover:scale-105 active:scale-95 ${
               activeFilter === tab.id
                 ? 'bg-gradient-to-r from-rose-500 via-fuchsia-500 to-indigo-500 text-white shadow-[0_16px_30px_rgba(217,70,239,0.28)]'
                 : 'text-white/72 hover:bg-white/8 hover:text-white'

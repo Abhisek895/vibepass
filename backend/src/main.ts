@@ -4,19 +4,20 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 
-function resolveCorsOrigins(frontendUrl?: string): string[] {
-  if (frontendUrl) {
-    return frontendUrl
-      .split(',')
-      .map((origin) => origin.trim())
-      .filter(Boolean);
+function resolveCorsOrigins(): boolean | string[] {
+  const frontendUrl = process.env.FRONTEND_URL;
+  if (!frontendUrl) {
+    return ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002'];
   }
 
-  return [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'http://localhost:3002',
-  ];
+  if (process.env.NODE_ENV !== 'production') {
+    return true;
+  }
+
+  return frontendUrl
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
 }
 
 async function bootstrap() {
@@ -29,7 +30,7 @@ async function bootstrap() {
   
   // Enable CORS for frontend
   app.enableCors({
-    origin: resolveCorsOrigins(process.env.FRONTEND_URL),
+    origin: resolveCorsOrigins(),
     credentials: true,
   });
 

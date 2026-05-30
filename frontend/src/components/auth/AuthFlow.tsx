@@ -362,30 +362,7 @@ export default function AuthFlow({ initialView }: AuthFlowProps = {}) {
             </div>
           )}
 
-          {(view === 'login' || view === 'register') && (
-            <div className="mb-6 space-y-3">
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 md:grid-cols-3">
-                <SocialButton
-                  label="Google"
-                  onClick={() => void handleSocialLogin('google')}
-                  disabled={isLoading}
-                />
-                <SocialButton
-                  label="Facebook"
-                  onClick={() => void handleSocialLogin('facebook')}
-                  disabled={isLoading}
-                />
-                <SocialButton
-                  label="Instagram"
-                  onClick={() => void handleSocialLogin('instagram')}
-                  disabled={isLoading}
-                />
-              </div>
-              <p className="text-center text-xs text-[rgb(var(--text-muted))]">
-                Sign in faster with social accounts.
-              </p>
-            </div>
-          )}
+
 
           <form onSubmit={handleSubmit} className="space-y-5">
             {(view === 'login' || view === 'register') && (

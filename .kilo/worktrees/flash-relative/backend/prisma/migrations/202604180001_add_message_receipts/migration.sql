@@ -1,2 +1,0 @@
-ALTER TABLE `messages` ADD COLUMN `deliveredAt` DATETIME NULL;
-ALTER TABLE `messages` ADD COLUMN `readAt` DATETIME NULL;

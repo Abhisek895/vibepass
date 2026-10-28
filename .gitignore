@@ -1,6 +1,32 @@
+# Dependencies
 node_modules/
-frontend/node_modules/
-frontend/.next/
-*.log
+**/node_modules/
+
+# Next.js
+.next/
+**/.next/
+out/
+frontend/out/
+
+# Environment files
 .env
+.env.local
+**/.env
+**/.env.local
+!*.env.example
+
+# Logs & temp files
+*.log
+**/*.log
+tmp*
+**/*.tsbuildinfo
+dev.db
+*.db
+*.backup.*
+
+# Artifacts & external tool caches
 nul
+npm
+.jarvis/
+.kilo/
+.DS_Store

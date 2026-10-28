@@ -79,6 +79,14 @@ const FALLBACK_CITIES = [
 // Local preview data keeps the experience reviewable if the API is offline.
 export const MATCHES_MOCK_POOL: Match[] = [
   {
+    id: 'mock-pool-elena',
+    username: 'elena.vance',
+    mood: 'Curating sonic vibes by dusk, searching for midnight espresso and rooftop conversations.',
+    interests: ['Music', 'Night Drives', 'Vinyl', 'Coffee'],
+    compatibilityScore: 98,
+    voiceOpen: true,
+  },
+  {
     id: 'mock-pool-1',
     username: 'lunar.echo',
     mood: 'Late-night walks, old playlists, and conversations that drift into sunrise.',
@@ -113,6 +121,15 @@ export const MATCHES_MOCK_POOL: Match[] = [
 ];
 
 export const MATCHES_MOCK_CONNECTIONS: ConnectionPreview[] = [
+  {
+    id: 'mock-chat-elena',
+    otherUser: {
+      id: 'user-elena',
+      username: 'elena.vance',
+    },
+    lastMessage: 'That synthwave track recommendation was dangerously good.',
+    updatedAt: new Date(Date.now() - 1000 * 60 * 12).toISOString(),
+  },
   {
     id: 'mock-chat-1',
     otherUser: {

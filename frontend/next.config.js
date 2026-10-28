@@ -23,6 +23,11 @@ const nextConfig = {
         port: '3003',
       },
       {
+        protocol: 'http',
+        hostname: '192.168.1.11',
+        port: '3003',
+      },
+      {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },

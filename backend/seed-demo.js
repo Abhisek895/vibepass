@@ -752,6 +752,63 @@ const SEED_USERS = [
       },
     ],
   }),
+  defineUser({
+    id: 'user-elena',
+    email: 'elena@vibepass.app',
+    username: 'elena.vance',
+    age: 24,
+    pronouns: 'she/her',
+    interests: ['Music', 'Night Drives', 'Vinyl', 'Coffee', 'Design', 'Travel'],
+    conversationIntent: 'deep-talk',
+    voiceComfort: 'comfortable',
+    bio: 'Curating sonic vibes by dusk, searching for midnight espresso and rooftop conversations.',
+    profile: {
+      id: 'profile-elena',
+      intro: 'I believe the right playlist can fix any bad day. If you appreciate vintage vinyl, indie synthwave, and authentic late-night laughs, we will click instantly.',
+      profilePhotoUrl:
+        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+      coverPhotoUrl:
+        'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80',
+      voiceOpen: true,
+      currentCity: 'Mumbai',
+      hometown: 'Goa',
+      workTitle: 'Music Producer & Sound Designer',
+      workPlace: 'VibeSound Studios',
+      education: 'Berklee College of Music',
+    },
+    promptAnswers: [
+      {
+        id: 'prompt-answer-elena-1',
+        promptId: 'prompt-perfect-night',
+        answer: 'Vinyl spinning on low volume, homemade espresso martinis, and conversations that wander until 3 AM.',
+      },
+      {
+        id: 'prompt-answer-elena-2',
+        promptId: 'prompt-green-flag',
+        answer: 'Someone who sends songs they think you would love, with zero context needed.',
+      },
+      {
+        id: 'prompt-answer-elena-3',
+        promptId: 'prompt-voice-call',
+        answer: 'Spontaneous voice notes with background city sounds and little laughs.',
+      },
+    ],
+    seedPosts: [
+      {
+        id: 'post-elena-1',
+        content:
+          'Just finished mixing a midnight synth track. What is that one song you put on repeat when the whole city is asleep?',
+        imageUrl:
+          'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=1200&q=80',
+      },
+      {
+        id: 'post-elena-2',
+        content:
+          'If you know every lyric to an obscure indie song, consider that an immediate match.',
+        imageUrl: null,
+      },
+    ],
+  }),
 ];
 
 const POSTS = SEED_USERS.flatMap(user =>
@@ -784,6 +841,9 @@ const POST_LIKES = [
   ['post-kabir-1', 'user-demo-host'],
   ['post-zoya-1', 'user-kiara'],
   ['post-mia-1', 'user-lina'],
+  ['post-elena-1', 'user-demo-host'],
+  ['post-elena-1', 'user-maya'],
+  ['post-demo-host-1', 'user-elena'],
 ];
 
 const POST_COMMENTS = [
@@ -834,6 +894,18 @@ const POST_COMMENTS = [
     postId: 'post-kabir-1',
     userId: 'user-noah',
     content: 'Snack priorities are non-negotiable data.',
+  },
+  {
+    id: 'comment-elena-1',
+    postId: 'post-elena-1',
+    userId: 'user-demo-host',
+    content: 'Midnight synthwave is essential fuel.',
+  },
+  {
+    id: 'comment-elena-2',
+    postId: 'post-demo-host-1',
+    userId: 'user-elena',
+    content: 'Share that loud playlist and I will critique the bassline!',
   },
 ];
 
@@ -961,6 +1033,30 @@ const CHATS = [
     ],
     connectionLabel: 'Cafe scouting',
   },
+  {
+    id: 'chat-demo-elena',
+    user1Id: 'user-demo-host',
+    user2Id: 'user-elena',
+    status: 'active',
+    messages: [
+      {
+        id: 'message-demo-elena-1',
+        senderId: 'user-elena',
+        content: 'That synthwave track recommendation you gave me was dangerously good.',
+      },
+      {
+        id: 'message-demo-elena-2',
+        senderId: 'user-demo-host',
+        content: 'I knew you would like it! Wait until you hear the acoustic version.',
+      },
+      {
+        id: 'message-demo-elena-3',
+        senderId: 'user-elena',
+        content: 'Send it over! Currently in the studio working on a new mix.',
+      },
+    ],
+    connectionLabel: 'Music & Midnight Vibes',
+  },
 ];
 
 const VOICE_SESSIONS = [
@@ -1061,10 +1157,24 @@ const NOTIFICATIONS = [
       actionUrl: '/profile/vibehost',
     }),
   },
+  {
+    id: 'notification-match-elena',
+    userId: 'user-demo-host',
+    actorId: 'user-elena',
+    type: 'NEW_MATCH',
+    targetId: 'chat-demo-elena',
+    targetType: 'chat',
+    read: false,
+    data: JSON.stringify({
+      actionUrl: '/chat/chat-demo-elena',
+      chatId: 'chat-demo-elena',
+    }),
+  },
 ];
 
 const ROOM_USERS = [
   ['room-night-owls', 'user-demo-host'],
+  ['room-night-owls', 'user-elena'],
   ['room-night-owls', 'user-maya'],
   ['room-night-owls', 'user-ava'],
   ['room-night-owls', 'user-mia'],

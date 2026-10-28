@@ -1,0 +1,354 @@
+// Append to existing schema.prisma
+
+// ============================================
+// GAMIFICATION & ENGAGEMENT SYSTEM
+// ============================================
+
+model UserLevel {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  level           Int      @default(1)
+  xp              Int      @default(0)
+  totalXpEarned   Int      @default(0) @map("total_xp_earned")
+  tier            String   @default("Newbie") // Newbie, Explorer, Charmer, Heartbreaker, Legend, Elite, Icon, Superstar, Celebrity, VIP
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("user_levels")
+}
+
+model Achievement {
+  id          String   @id @default(uuid())
+  key         String   @unique // first_match, hot_streak, century_club, etc.
+  name        String
+  description String   @db.Text
+  category    String   // profile, matching, social, special
+  icon        String   // emoji or icon name
+  xpReward    Int      @default(0) @map("xp_reward")
+  badgeUrl    String?  @map("badge_url")
+  tier        String   @default("bronze") // bronze, silver, gold, platinum, diamond
+  requirement String   @db.Text // JSON with requirements
+  isSecret    Boolean  @default(false) @map("is_secret")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  userAchievements UserAchievement[]
+
+  @@map("achievements")
+}
+
+model UserAchievement {
+  id            String   @id @default(uuid())
+  userId        String   @map("user_id")
+  achievementId String   @map("achievement_id")
+  progress      Int      @default(0) // Current progress towards achievement
+  isCompleted   Boolean  @default(false) @map("is_completed")
+  completedAt   DateTime? @map("completed_at")
+  earnedAt      DateTime @default(now()) @map("earned_at")
+
+  achievement Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementId])
+  @@index([userId])
+  @@index([achievementId])
+  @@map("user_achievements")
+}
+
+model DailyQuest {
+  id          String   @id @default(uuid())
+  key         String   @unique // swipe_20, match_3, send_5_messages, etc.
+  name        String
+  description String   @db.Text
+  type        String   // daily, weekly, special
+  target      Int      // Target count to complete
+  xpReward    Int      @map("xp_reward")
+  itemReward  String?  @map("item_reward") @db.Text // JSON: {type: "boost", count: 1}
+  difficulty  String   @default("easy") // easy, medium, hard
+  isActive    Boolean  @default(true) @map("is_active")
+  startDate   DateTime? @map("start_date")
+  endDate     DateTime? @map("end_date")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  userQuests UserQuest[]
+
+  @@map("daily_quests")
+}
+
+model UserQuest {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  questId     String   @map("quest_id")
+  progress    Int      @default(0)
+  isCompleted Boolean  @default(false) @map("is_completed")
+  completedAt DateTime? @map("completed_at")
+  date        DateTime @default(now()) // Quest instance date
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  quest DailyQuest @relation(fields: [questId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questId, date])
+  @@index([userId])
+  @@index([questId])
+  @@index([date])
+  @@map("user_quests")
+}
+
+model UserStreak {
+  id              String   @id @default(uuid())
+  userId          String   @unique @map("user_id")
+  currentStreak   Int      @default(0) @map("current_streak")
+  longestStreak   Int      @default(0) @map("longest_streak")
+  lastActiveDate  DateTime @map("last_active_date")
+  streakFrozen    Boolean  @default(false) @map("streak_frozen") // Premium feature
+  freezeCount     Int      @default(0) @map("freeze_count")
+  totalDaysActive Int      @default(0) @map("total_days_active")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("user_streaks")
+}
+
+model UserStats {
+  id                    String   @id @default(uuid())
+  userId                String   @unique @map("user_id")
+  profileViews          Int      @default(0) @map("profile_views")
+  profileViewsToday     Int      @default(0) @map("profile_views_today")
+  profileViewsThisWeek  Int      @default(0) @map("profile_views_this_week")
+  likesReceived         Int      @default(0) @map("likes_received")
+  likesReceivedToday    Int      @default(0) @map("likes_received_today")
+  likesSent             Int      @default(0) @map("likes_sent")
+  superLikesReceived    Int      @default(0) @map("super_likes_received")
+  superLikesSent        Int      @default(0) @map("super_likes_sent")
+  matchesCount          Int      @default(0) @map("matches_count")
+  matchesToday          Int      @default(0) @map("matches_today")
+  messagesCount         Int      @default(0) @map("messages_count")
+  messagesToday         Int      @default(0) @map("messages_today")
+  firstMessagesSent     Int      @default(0) @map("first_messages_sent")
+  repliesReceived       Int      @default(0) @map("replies_received")
+  repliesSent           Int      @default(0) @map("replies_sent")
+  averageResponseTime   Int?     @map("average_response_time") // in minutes
+  matchRate             Float    @default(0.0) @map("match_rate") // percentage
+  replyRate             Float    @default(0.0) @map("reply_rate") // percentage
+  videoCallsCount       Int      @default(0) @map("video_calls_count")
+  voiceCallsCount       Int      @default(0) @map("voice_calls_count")
+  datesConfirmed        Int      @default(0) @map("dates_confirmed")
+  complimentsSent       Int      @default(0) @map("compliments_sent")
+  complimentsReceived   Int      @default(0) @map("compliments_received")
+  boostsUsed            Int      @default(0) @map("boosts_used")
+  lastResetDate         DateTime @default(now()) @map("last_reset_date")
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt @map("updated_at")
+
+  @@map("user_stats")
+}
+
+model MatchLike {
+  id          String   @id @default(uuid())
+  senderId    String   @map("sender_id")
+  targetId    String   @map("target_id")
+  type        String   @default("like") // like, super_like
+  message     String?  @db.Text // Optional message with super like
+  isMatch     Boolean  @default(false) @map("is_match")
+  matchedAt   DateTime? @map("matched_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  expiresAt   DateTime? @map("expires_at") // Likes can expire after 30 days
+
+  sender User @relation("LikeSender", fields: [senderId], references: [id], onDelete: Cascade)
+  target User @relation("LikeTarget", fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@unique([senderId, targetId])
+  @@index([targetId])
+  @@index([createdAt])
+  @@map("match_likes")
+}
+
+model MatchPass {
+  id        String   @id @default(uuid())
+  senderId  String   @map("sender_id")
+  targetId  String   @map("target_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  sender User @relation("PassSender", fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@unique([senderId, targetId])
+  @@index([targetId])
+  @@map("match_passes")
+}
+
+model UserElo {
+  id              String   @id @default(uuid())
+  userId          String   @unique @map("user_id")
+  eloScore        Int      @default(1500) @map("elo_score") // Chess-style ELO rating
+  attractiveness  Float    @default(50.0) // Percentile (0-100)
+  popularity      Int      @default(0) // Calculated from likes, views, etc.
+  activityScore   Int      @default(0) @map("activity_score")
+  responsivenessScore Int  @default(50) @map("responsiveness_score")
+  qualityScore    Int      @default(50) @map("quality_score") // Profile completeness + engagement
+  lastCalculated  DateTime @default(now()) @map("last_calculated")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("user_elo")
+}
+
+model ProfileView {
+  id          String   @id @default(uuid())
+  viewerId    String   @map("viewer_id")
+  viewedId    String   @map("viewed_id")
+  viewedAt    DateTime @default(now()) @map("viewed_at")
+  durationSec Int?     @map("duration_sec") // Time spent viewing
+  source      String   @default("discovery") // discovery, search, profile_link
+
+  @@index([viewerId])
+  @@index([viewedId])
+  @@index([viewedAt])
+  @@map("profile_views")
+}
+
+model Compliment {
+  id          String   @id @default(uuid())
+  senderId    String   @map("sender_id")
+  recipientId String   @map("recipient_id")
+  type        String   // smile, style, bio, photos, vibe, funny, smart, creative
+  message     String?  @db.Text
+  isRead      Boolean  @default(false) @map("is_read")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([senderId])
+  @@index([recipientId])
+  @@index([createdAt])
+  @@map("compliments")
+}
+
+model UserBoost {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  type        String   @default("profile") // profile, priority_likes
+  startedAt   DateTime @default(now()) @map("started_at")
+  expiresAt   DateTime @map("expires_at")
+  isActive    Boolean  @default(true) @map("is_active")
+  source      String   @default("purchased") // purchased, reward, quest
+  viewsGained Int      @default(0) @map("views_gained")
+  likesGained Int      @default(0) @map("likes_gained")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("user_boosts")
+}
+
+model UserSubscription {
+  id              String   @id @default(uuid())
+  userId          String   @unique @map("user_id")
+  tier            String   @default("free") // free, plus, gold, platinum
+  status          String   @default("active") // active, cancelled, expired, paused
+  startDate       DateTime @default(now()) @map("start_date")
+  endDate         DateTime? @map("end_date")
+  autoRenew       Boolean  @default(true) @map("auto_renew")
+  paymentMethod   String?  @map("payment_method")
+  amount          Decimal? @db.Decimal(10, 2)
+  currency        String   @default("USD")
+  billingCycle    String   @default("monthly") // monthly, quarterly, yearly
+  trialEndsAt     DateTime? @map("trial_ends_at")
+  cancelledAt     DateTime? @map("cancelled_at")
+  lastPaymentDate DateTime? @map("last_payment_date")
+  nextBillingDate DateTime? @map("next_billing_date")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("user_subscriptions")
+}
+
+model NotificationSettings {
+  id                    String   @id @default(uuid())
+  userId                String   @unique @map("user_id")
+  matchNotifications    Boolean  @default(true) @map("match_notifications")
+  messageNotifications  Boolean  @default(true) @map("message_notifications")
+  likeNotifications     Boolean  @default(true) @map("like_notifications")
+  superLikeNotifications Boolean @default(true) @map("super_like_notifications")
+  profileViewNotifications Boolean @default(false) @map("profile_view_notifications")
+  questNotifications    Boolean  @default(true) @map("quest_notifications")
+  achievementNotifications Boolean @default(true) @map("achievement_notifications")
+  promotionalNotifications Boolean @default(true) @map("promotional_notifications")
+  emailNotifications    Boolean  @default(true) @map("email_notifications")
+  pushNotifications     Boolean  @default(true) @map("push_notifications")
+  smsNotifications      Boolean  @default(false) @map("sms_notifications")
+  quietHoursStart       Int?     @map("quiet_hours_start") // Hour (0-23)
+  quietHoursEnd         Int?     @map("quiet_hours_end") // Hour (0-23)
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt @map("updated_at")
+
+  @@map("notification_settings")
+}
+
+model DatingPreferences {
+  id                  String   @id @default(uuid())
+  userId              String   @unique @map("user_id")
+  ageMin              Int      @default(18) @map("age_min")
+  ageMax              Int      @default(99) @map("age_max")
+  maxDistance         Int      @default(50) @map("max_distance") // in km
+  showMe              String   @default("everyone") // male, female, everyone, non_binary
+  relationshipGoal    String?  @map("relationship_goal") // casual, serious, friendship, not_sure
+  dealbreakers        String?  @db.Text // JSON array
+  mustHaves           String?  @map("must_haves") @db.Text // JSON array
+  heightMin           Int?     @map("height_min") // in cm
+  heightMax           Int?     @map("height_max") // in cm
+  education           String?  // Filter by education level
+  hasKids             String?  @map("has_kids") // yes, no, no_preference
+  wantsKids           String?  @map("wants_kids") // yes, no, maybe, no_preference
+  smoking             String?  // never, socially, regularly, no_preference
+  drinking            String?  // never, socially, regularly, no_preference
+  religion            String?
+  politics            String?
+  ethnicity           String?  @db.Text // JSON array
+  languages           String?  @db.Text // JSON array
+  interests           String?  @db.Text // JSON array of required interests
+  onlyShowVerified    Boolean  @default(false) @map("only_show_verified")
+  onlyShowActive      Boolean  @default(false) @map("only_show_active") // Active within last 7 days
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  @@map("dating_preferences")
+}
+
+model IcebreakerTemplate {
+  id          String   @id @default(uuid())
+  category    String   // funny, flirty, deep, casual, question
+  text        String   @db.Text
+  useCount    Int      @default(0) @map("use_count")
+  successRate Float    @default(0.0) @map("success_rate") // Reply rate
+  isPremium   Boolean  @default(false) @map("is_premium")
+  isActive    Boolean  @default(true) @map("is_active")
+  tags        String?  @db.Text // JSON array
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("icebreaker_templates")
+}
+
+model XpTransaction {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  amount      Int      // Can be positive or negative
+  type        String   // earned, bonus, purchase, penalty
+  source      String   // match, message, quest, achievement, daily_login, etc.
+  description String   @db.Text
+  metadata    String?  @db.Text // JSON with additional data
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("xp_transactions")
+}
+
+model UserEvent {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  eventType   String   @map("event_type") // swipe_right, swipe_left, match, message_sent, profile_view, etc.
+  targetId    String?  @map("target_id") // ID of the target user/item
+  metadata    String?  @db.Text // JSON with event details
+  timestamp   DateTime @default(now())
+
+  @@index([userId])
+  @@index([eventType])
+  @@index([timestamp])
+  @@map("user_events")
+}

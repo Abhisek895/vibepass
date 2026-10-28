@@ -17,7 +17,7 @@ export function normalizeImageUrl(url?: string | null): string | undefined {
   const cleanPath = url.startsWith('/') ? url : `/${url}`;
 
   // Local backend fallback - should ideally come from env
-  const backendHost = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3003';
+  const backendHost = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || '';
   
   // Strip trailing slash from host if present
   const base = backendHost.endsWith('/') ? backendHost.slice(0, -1) : backendHost;

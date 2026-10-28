@@ -23,6 +23,10 @@ tmp*
 dev.db
 *.db
 *.backup.*
+*.apk
+frontend/android/app/build/
+frontend/android/.gradle/
+frontend/android/build/
 
 # Artifacts & external tool caches
 nul

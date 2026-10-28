@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'VibePass',
   webDir: 'out',
   server: {
-    url: 'http://10.252.169.210:3000',
+    url: 'http://192.168.1.11:3000',
     cleartext: true,
   },
   plugins: {

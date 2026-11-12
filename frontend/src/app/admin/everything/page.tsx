@@ -36,7 +36,7 @@ export default function AdminEverythingPage() {
 
   if (!isSuperAdmin) {
     return (
-      <div className="p-8">
+      <div className="w-full">
         <p className="text-red-400 font-medium">Access Denied</p>
         <p className="text-white/50 text-sm mt-1">This page is restricted to super_admin only.</p>
         <Button variant="outline" className="mt-4" onClick={() => router.push('/admin')}>
@@ -50,7 +50,7 @@ export default function AdminEverythingPage() {
   const totalVoicePages = voiceData ? Math.ceil(voiceData.total / LIMIT) : 0;
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="w-full space-y-8">
       {/* Header */}
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="sm" onClick={() => router.push('/admin')}>

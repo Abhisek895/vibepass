@@ -22,6 +22,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         isBanned: true,
         isSuspended: true,
         username: true,
+        role: true,
       },
     });
 
@@ -29,6 +30,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException('Invalid authentication token');
     }
 
-    return { id: user.id, email: user.email, username: user.username };
+    return { id: user.id, email: user.email, username: user.username, role: user.role };
   }
 }

@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@prisma/client-safety"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_SAFETY")
+}
+
+model Report {
+  id         String   @id @default(uuid())
+  reporterId String
+  reportedId String
+  reason     String
+  details    String?  @db.Text
+  status     String   @default("pending")
+  createdAt  DateTime @default(now())
+
+  @@index([reportedId])
+  @@map("reports")
+}
+
+model Block {
+  id        String   @id @default(uuid())
+  blockerId String
+  blockedId String
+  createdAt DateTime @default(now())
+
+  @@unique([blockerId, blockedId])
+  @@map("blocks")
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  adminId    String?
+  action     String
+  targetType String
+  targetId   String
+  metadata   String?  @db.Text
+  createdAt  DateTime @default(now())
+
+  @@index([targetId])
+  @@map("audit_logs")
+}
+
+model AuditSession {
+  id        String   @id @default(uuid())
+  userId    String
+  action    String
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@map("audit_sessions")
+}
+

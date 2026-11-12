@@ -12,7 +12,14 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "typecheck": "tsc --noEmit --incremental false -p tsconfig.json"
+    "typecheck": "tsc --noEmit --incremental false -p tsconfig.json",
+    "start:services": "node scripts/start-microservices.js",
+    "start:gateway": "nest start gateway --watch",
+    "start:auth": "nest start auth-service --watch",
+    "start:matching": "nest start matching-service --watch",
+    "start:realtime": "nest start realtime-service --watch",
+    "start:social": "nest start social-service --watch",
+    "start:safety": "nest start safety-service --watch"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@prisma/client-auth"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_AUTH")
+}
+
+model User {
+  id                   String                @id @default(uuid())
+  email                String                @unique
+  age                  Int?
+  createdAt            DateTime              @default(now())
+  genderPreference     String?
+  interests            String?
+  isBanned             Boolean               @default(false)
+  isSuspended          Boolean               @default(false)
+  language             String                @default("en")
+  passwordHash         String?
+  pronouns             String?
+  timezone             String                @default("UTC")
+  trustScore           Int                   @default(100)
+  updatedAt            DateTime              @default(now()) @updatedAt
+  username             String?
+  voiceComfort         String?
+  lastUsernameChangeAt DateTime?
+  bio                  String?
+  conversationIntent   String?
+  readReceipts         Boolean               @default(true)
+  role                 String                @default("user") @db.VarChar(50)
+  profile              Profile?
+  badges               Badge[]
+  subscription         UserSubscription?
+  notificationSettings NotificationSettings?
+  datingPreferences    DatingPreferences?
+
+  @@map("users")
+}
+
+model Profile {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  avatarUrl       String?
+  coverPhotoUrl   String?
+  workTitle       String?
+  companyName     String?
+  education       String?
+  currentCity     String?
+  hometown        String?
+  relationship    String?
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now()) @updatedAt
+
+  @@map("profiles")
+}
+
+model Badge {
+  id          String   @id @default(uuid())
+  userId      String
+  name        String
+  description String
+  icon        String
+  awardedAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("badges")
+}
+
+model UserSubscription {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  plan      String   @default("free")
+  active    Boolean  @default(true)
+  expiresAt DateTime?
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_subscriptions")
+}
+
+model NotificationSettings {
+  id              String  @id @default(uuid())
+  userId          String  @unique
+  emailNotifs     Boolean @default(true)
+  pushNotifs      Boolean @default(true)
+  marketingEmails Boolean @default(false)
+  user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notification_settings")
+}
+
+model DatingPreferences {
+  id              String  @id @default(uuid())
+  userId          String  @unique
+  minAge          Int     @default(18)
+  maxAge          Int     @default(99)
+  preferredGender String?
+  user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("dating_preferences")
+}
+

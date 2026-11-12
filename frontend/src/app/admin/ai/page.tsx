@@ -38,7 +38,7 @@ export default function AIDashboardPage() {
   ];
 
   return (
-    <div className="space-y-10 animate-in fade-in duration-500">
+    <div className="w-full space-y-10 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-black tracking-tight text-white flex items-center gap-3">

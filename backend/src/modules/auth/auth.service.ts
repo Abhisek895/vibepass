@@ -87,11 +87,12 @@ export class AuthService {
     }
   }
 
-  private signAccessToken(user: { email: string; id: string; username: string | null }) {
+  private signAccessToken(user: { email: string; id: string; username: string | null; role?: string }) {
     return this.jwtService.sign({
       email: user.email,
       sub: user.id,
       username: user.username,
+      role: (user as any).role || 'user',
     });
   }
 

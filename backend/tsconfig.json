@@ -8,7 +8,11 @@
     "allowSyntheticDefaultImports": true,
     "target": "ES2021",
     "sourceMap": true,
-    "rootDir": "./src",
+    "baseUrl": "./",
+    "paths": {
+      "@contracts/*": ["libs/contracts/src/*"],
+      "@common/*": ["libs/common/src/*"]
+    },
     "outDir": "./dist",
     "incremental": false,
     "skipLibCheck": true,
@@ -18,6 +22,6 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["dist", "node_modules", "src/modules/gamification"]
+  "include": ["src/**/*.ts", "apps/**/*.ts", "libs/**/*.ts"],
+  "exclude": ["dist", "node_modules"]
 }

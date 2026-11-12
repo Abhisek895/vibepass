@@ -75,7 +75,7 @@ export default function AdminContentPage() {
   };
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="w-full space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white">Content Moderation</h1>

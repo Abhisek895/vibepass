@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@prisma/client-matching"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_MATCHING")
+}
+
+model Mood {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  emoji       String
+  description String
+  category    String
+  color       String
+  createdAt   DateTime @default(now())
+
+  @@map("moods")
+}
+
+model ConversationIntent {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String
+  icon        String
+  isCasual    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@map("conversation_intents")
+}
+
+model Prompt {
+  id         String         @id @default(uuid())
+  category   String
+  difficulty String
+  dailyTheme String?
+  expiresAt  DateTime?
+  isActive   Boolean        @default(true)
+  isDaily    Boolean        @default(false)
+  text       String
+  type       String
+  createdAt  DateTime       @default(now())
+  answers    PromptAnswer[]
+
+  @@map("prompts")
+}
+
+model PromptAnswer {
+  id         String   @id @default(uuid())
+  userId     String
+  promptId   String
+  answerText String   @db.Text
+  createdAt  DateTime @default(now())
+  prompt     Prompt   @relation(fields: [promptId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("prompt_answers")
+}
+
+model MatchLike {
+  id        String   @id @default(uuid())
+  senderId  String
+  targetId  String
+  createdAt DateTime @default(now())
+
+  @@unique([senderId, targetId])
+  @@index([targetId])
+  @@map("match_likes")
+}
+
+model MatchPass {
+  id        String   @id @default(uuid())
+  senderId  String
+  targetId  String
+  createdAt DateTime @default(now())
+
+  @@unique([senderId, targetId])
+  @@index([targetId])
+  @@map("match_passes")
+}
+
+model SavedConnection {
+  id         String   @id @default(uuid())
+  user1Id    String
+  user2Id    String
+  matchScore Int      @default(80)
+  createdAt  DateTime @default(now())
+
+  @@unique([user1Id, user2Id])
+  @@map("saved_connections")
+}
+
+model UserElo {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  eloScore  Int      @default(1200)
+  matches   Int      @default(0)
+  wins      Int      @default(0)
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("user_elos")
+}
+

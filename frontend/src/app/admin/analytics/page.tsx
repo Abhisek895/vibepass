@@ -26,7 +26,7 @@ export default function AdminAnalyticsPage() {
 
   if (loading) {
     return (
-      <div className="p-8 space-y-6">
+      <div className="w-full space-y-6">
         <Skeleton className="h-8 w-48" />
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
           {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} className="h-28 rounded-2xl" />)}
@@ -41,7 +41,7 @@ export default function AdminAnalyticsPage() {
 
   if (!data) {
     return (
-      <div className="p-8">
+      <div className="w-full">
         <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-6 text-center">
           <AlertTriangle className="w-8 h-8 text-red-400 mx-auto mb-2" />
           <p className="text-red-400 font-medium">Failed to load analytics</p>
@@ -64,7 +64,7 @@ export default function AdminAnalyticsPage() {
   ];
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="w-full space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-white">Analytics</h1>
         <p className="text-white/40 text-sm mt-1">Platform performance metrics</p>

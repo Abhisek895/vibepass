@@ -1,8 +1,32 @@
 "use client";
 
+import { useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/store/auth';
+import { getAccessToken } from '@/services/api/storage';
 
 export default function Home() {
+  const router = useRouter();
+  const { isAuthenticated, isLoading } = useAuth();
+
+  useEffect(() => {
+    const token = getAccessToken();
+    if (token) {
+      router.replace('/matches');
+    }
+  }, [isAuthenticated, router]);
+
+  // If already authenticated or loading with a token, don't flash login buttons
+  const hasToken = typeof window !== 'undefined' ? Boolean(getAccessToken()) : false;
+  if (hasToken || (isLoading && hasToken)) {
+    return (
+      <main className="min-h-screen flex flex-col items-center justify-center p-8 bg-[#0B141B]">
+        <div className="w-10 h-10 rounded-full border-2 border-violet-500 border-t-transparent animate-spin" />
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden">
       {/* Animated Background */}

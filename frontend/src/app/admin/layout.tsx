@@ -19,6 +19,8 @@ import {
   Bell,
   Activity,
   Eye,
+  UserCheck,
+  ArrowLeft,
 } from 'lucide-react';
 
 const navItems = [
@@ -35,13 +37,16 @@ const navItems = [
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { mode, isInitialized, userRole } = useAdminMode();
+  const { mode, isInitialized, userRole, setMode } = useAdminMode();
 
   useEffect(() => {
-    if (isInitialized && mode === 'user') {
-      router.replace('/');
+    if (isInitialized) {
+      const isAdminRole = userRole && ['admin', 'super_admin', 'moderator'].includes(userRole);
+      if (!isAdminRole) {
+        router.replace('/matches');
+      }
     }
-  }, [isInitialized, mode, router]);
+  }, [isInitialized, userRole, router]);
 
   if (!isInitialized) {
     return (
@@ -54,7 +59,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     );
   }
 
-  if (mode === 'user') return null;
+  const isAdminRole = userRole && ['admin', 'super_admin', 'moderator'].includes(userRole);
+  if (!isAdminRole) return null;
 
   return (
     /*
@@ -115,26 +121,38 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         {/* Sidebar Footer */}
         <div className="p-4 mt-auto">
-          <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-4">
+          <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center border border-white/10">
-                <Users className="w-4 h-4 text-slate-400" />
+                <Shield className="w-4 h-4 text-violet-400" />
               </div>
-              <div className="overflow-hidden">
+              <div className="overflow-hidden flex-1">
                 <p className="text-xs font-bold text-white truncate">System Administrator</p>
                 <p className="text-[10px] text-white/40 truncate">v1.2.0-stable</p>
               </div>
             </div>
-            <button
-              onClick={() => {
-                useAdminMode.getState().setMode('user');
-                router.push('/');
-              }}
-              className="w-full flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-xs font-bold text-white/60 hover:text-white hover:bg-white/5 transition-all border border-white/5"
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              Return to App
-            </button>
+
+            <div className="pt-2 border-t border-white/5 space-y-2">
+              <button
+                onClick={() => {
+                  useAdminMode.getState().setMode('user');
+                  router.push('/matches');
+                }}
+                className="w-full flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-xs font-bold text-violet-200 bg-violet-600/20 hover:bg-violet-600/30 border border-violet-500/30 transition-all shadow-sm shadow-violet-950/40 group"
+              >
+                <UserCheck className="w-3.5 h-3.5 text-violet-400 group-hover:scale-110 transition-transform" />
+                Continue as a User
+              </button>
+              <button
+                onClick={() => {
+                  router.push('/matches');
+                }}
+                className="w-full flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-white/50 hover:text-white hover:bg-white/5 transition-all border border-transparent hover:border-white/5"
+              >
+                <ArrowLeft className="w-3.5 h-3.5 text-white/40" />
+                Return to App
+              </button>
+            </div>
           </div>
         </div>
       </aside>

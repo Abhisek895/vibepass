@@ -20,6 +20,8 @@ export function AdminModeProvider({ children }: { children: React.ReactNode }) {
     setMode(selectedMode);
     if (selectedMode === 'admin') {
       router.push('/admin');
+    } else {
+      router.push('/matches');
     }
   };
 

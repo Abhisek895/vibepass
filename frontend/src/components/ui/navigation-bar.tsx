@@ -4,10 +4,11 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { Heart, MessageCircle, User as UserIcon, LogOut, Bell } from 'lucide-react';
+import { Heart, MessageCircle, User as UserIcon, LogOut, Bell, Shield } from 'lucide-react';
 import { apiRequest } from '@/services/api/client';
 import { getAccessToken } from '@/services/api/storage';
 import { useAuth } from '@/store/auth';
+import { useAdminMode } from '@/store/admin-mode';
 
 const navItems = [
   { id: 'inbox', label: 'Inbox', href: '/chat', icon: MessageCircle },
@@ -19,8 +20,10 @@ export function NavigationBar() {
   const pathname = usePathname();
   const router = useRouter();
   const { user, isAuthenticated, logout } = useAuth();
+  const { userRole, setMode } = useAdminMode();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const hasToken = Boolean(getAccessToken());
+  const isAdminRole = userRole && ['admin', 'super_admin', 'moderator'].includes(userRole);
 
   const { data: unreadData } = useQuery({
     queryKey: ['notifications', 'count'],
@@ -96,6 +99,18 @@ export function NavigationBar() {
            >
              <UserIcon className={pathname.startsWith('/profile/') ? "h-8 w-8 fill-current" : "h-7 w-7"} />
            </button>
+           {isAdminRole && (
+             <button
+               onClick={() => {
+                 setMode('admin');
+                 router.push('/admin');
+               }}
+               className="flex size-16 items-center justify-center rounded-2xl transition-all duration-300 hover:scale-105 text-violet-400 hover:text-violet-300"
+               title="Admin Panel"
+             >
+               <Shield className="h-7 w-7" />
+             </button>
+           )}
          </div>
        </nav>
 
@@ -151,6 +166,19 @@ export function NavigationBar() {
              >
                <UserIcon className="h-6 w-6 text-[rgb(var(--text-secondary))]" />
              </button>
+             {isAdminRole && (
+               <button
+                 onClick={() => {
+                   setMode('admin');
+                   router.push('/admin');
+                 }}
+                 className="inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-xs font-bold text-violet-300 bg-violet-600/20 hover:bg-violet-600/30 border border-violet-500/30 transition-all hover:scale-105"
+                 title="Switch to Admin Console"
+               >
+                 <Shield className="h-4 w-4 text-violet-400" />
+                 <span className="hidden md:inline">Admin Panel</span>
+               </button>
+             )}
              <div className="text-base hidden md:block">
                <p className="font-semibold text-white">{user?.nickname || user?.username || 'Guest'}</p>
                <p className="text-[rgb(var(--text-secondary))]">@{user?.username || 'guest'}</p>
